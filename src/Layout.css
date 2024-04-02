@@ -1,0 +1,11 @@
+.title{
+    background-color: purple;
+    padding: 8px;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+.lead{
+    color: white;
+    font-size:30px;
+    font-weight: bold;
+}

@@ -1,0 +1,48 @@
+.wrapper {
+    position: fixed; /* Use fixed position */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.card {
+    z-index: 20; /* Ensure the card has a higher z-index than the background */
+    padding: 20px;
+    background-color: #080C18;
+  }
+.image-status{
+    color: green;
+}  
+.title{
+    color: rgb(224, 219, 219);
+}
+.status{
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+}
+.tick{
+    color:rgb(12, 206, 12);
+    font-size: 30px;
+}
+.cross{
+    color: rgb(212, 29, 29);
+    font-size:30px;
+}
+.alert-sub{
+    color: rgb(250, 243, 243);
+}
+.alert-amount{
+    color: rgb(250, 243, 243);
+    font-size: 24px;
+}
+.alert-prob{
+    color: rgb(168, 167, 167);
+    font-size: 14px;
+}
