@@ -7,6 +7,12 @@ import "./Profile.css";
 import { genderOptions, genderMaritalOptions, districtOptions, cityOptions, productCodeOptions, assetTypeOptions, contractStatusOptions } from "./options";
 import Loader from "./Loader";
 import CenterBox from "./CenterBox";
+import Card from "./card";
+import {  useDispatch } from 'react-redux';
+import {addNewCard } from './actions/actions';
+import { useSelector} from 'react-redux';
+import {filterCards} from './util';
+
 
 const Profile = () => {
 
@@ -17,6 +23,9 @@ const Profile = () => {
     const [isDeafult,setIsDeafult] = useState("");
     const [safeAmount,setSafeAmount] = useState("");
     const [safeFactor,setSafeFactor] = useState("");
+    const dispatch =useDispatch();
+    const history =useSelector((state)=>state.historyListReducer);
+    console.log(history, ' all jobs')
 
     // Initialize form data with values from local storage or defaults
     const initialFormData = () => {
@@ -48,6 +57,7 @@ const Profile = () => {
     const [formData, setFormData] = useState(initialFormData);
 
     useEffect(() => {
+
         const checkAuthentication = async () => {
             if (!user) {
                 // User is not authenticated, redirect to login page
@@ -280,12 +290,39 @@ const Profile = () => {
                     </form>
                 </div>
             </div>
+            <div className="row justify-content-center">
+                <div className="col-md-4 text-center">
+                   <h4>History</h4>
+                </div>
+            <div className="row justify-content-center">   
+            {filterCards(user.email, history.jobs).map(job => (
+                        <div className="col-md-4" key={job.timestamp} >
+                            <Card jobCard={job} />
+                        </div>
+            ))}
+            </div>
+            </div>
         </div>
         )};
         {isShowAlert? <div className="alert-box">
             <CenterBox status={isDeafult} amount= {safeAmount} factor = {safeFactor} name = {formData.firstName} name2 = {formData.lastName} onClose={() =>{ 
                 setShowAlert(false); 
                 setFormData(initialFormData);
+                const res = {
+                    income: formData.income,
+                    expense: formData.expense,
+                    pName : formData.pName,
+                    finAmount : formData.finAmount,
+                    noOfRentals : formData.noOfRentals,
+                    noOfPaidRentals: formData.noOfPaidRentals,
+                    is_default: isDeafult,
+                    safeAmount : safeAmount,
+                    safeFactor : safeFactor,
+                    user : user.email,               
+                };
+                dispatch(addNewCard(res));
+
+
         }}/>
             </div> : ""}
         </>

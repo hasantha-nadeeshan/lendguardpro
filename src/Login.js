@@ -2,22 +2,30 @@ import { useState } from "react";
 import { auth } from "./config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import {getAllCards} from './actions/actions';
+import {  useDispatch } from 'react-redux';
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [notice, setNotice] = useState("");
-
+    const dispatch =useDispatch();
+    
     const loginWithUsernameAndPassword = async (e) => {
         e.preventDefault();
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
             navigate("./profile");
+
         } catch {
             setNotice("You entered a wrong username or password.");
         }
+        const usr = {
+            user:email
+        };
+        dispatch(getAllCards(usr));
     }
 
     return(
